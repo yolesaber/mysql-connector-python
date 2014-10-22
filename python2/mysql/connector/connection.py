@@ -518,11 +518,11 @@ class MySQLConnection(object):
             # Send a empty packet to cancel the operation
             try:
                 self._socket.send('')
-            except AttributeError:
+            except AttributeError, e:
                 raise errors.OperationalError(
                     "MySQL Connection not available.")
-            raise errors.InterfaceError("File '{0}' could not be read".format(
-                filename))
+            raise errors.InterfaceError("File '{0}' could not be read because {1}".format(
+                filename, e))
 
         return self._handle_ok(self._send_data(data_file,
                                                send_empty_packet=True))
